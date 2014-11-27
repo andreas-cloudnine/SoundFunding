@@ -1,0 +1,30 @@
+﻿@model SoundFunding.Models.Cause
+@{
+    ViewBag.Title = "Add cause";
+}
+
+<h2>Create cause</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Create","Cause", FormMethod.Post))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Name)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ContributorIds)
+                    <select name="@Html.NameFor(m => m.ContributorIds)"></select>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create cause" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
