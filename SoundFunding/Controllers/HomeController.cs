@@ -13,18 +13,19 @@ namespace SoundFunding.Controllers
     {
         public ActionResult Index()
         {
-            using (var db = new SoundFundingDbContext())
-            {
-                db.Causes.AddOrUpdate(new Cause
-                {
-                    Name = "Test",
-                    ContributorIds = new List<string>
-                    {
-                        User.Identity.GetUserId()
-                    },
-                    GoalSum = 15353200
-                });
-            }
+            //using (var db = new SoundFundingDbContext())
+            //{
+            //    db.Causes.AddOrUpdate(new Cause
+            //    {
+            //        Name = "Test",
+            //        ContributorIds = new List<string>
+            //        {
+            //            User.Identity.GetUserId()
+            //        },
+            //        GoalSum = 15353200
+            //    });
+            //    db.SaveChanges();
+            //}
 
             return View();
         }
