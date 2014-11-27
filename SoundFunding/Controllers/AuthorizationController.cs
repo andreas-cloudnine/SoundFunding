@@ -40,28 +40,30 @@ namespace SoundFunding.Controllers
 
             var playlists = Playlist.GetUsersPlaylists(user, token).Result;
 
-            var allArtists = new ConcurrentBag<Artist>();
+            var newPlaylistTracks = playlists.Items.First().Tracks.Items.Select(t => t.Track).Take(2);
 
-            foreach (var playlist in playlists.Items)
-            {
-                var playlistTracks = Playlist.GetPlaylistTracks(user.Id, playlist.Id, token).Result;
-                var artists = playlistTracks.Items.Take(2).SelectMany(t => t.Track.Artists).ToList();
-                foreach (var artist in artists)
-                    allArtists.Add(artist);
-            }
+            //var allArtists = new ConcurrentBag<Artist>();
 
-            allArtists = new ConcurrentBag<Artist>(allArtists.ToArray().DistinctBy(a => a.Id));
+            //foreach (var playlist in playlists.Items)
+            //{
+            //    var playlistTracks = Playlist.GetPlaylistTracks(user.Id, playlist.Id, token).Result;
+            //    var artists = playlistTracks.Items.Take(2).SelectMany(t => t.Track.Artists).ToList();
+            //    foreach (var artist in artists)
+            //        allArtists.Add(artist);
+            //}
 
-            var newPlaylistTracks = new ConcurrentBag<Track>();
+            //allArtists = new ConcurrentBag<Artist>(allArtists.ToArray().DistinctBy(a => a.Id));
 
-            foreach (var artist in allArtists)
-            {
-                var tracks = Track.GetArtistTopTracks(artist.Id, "SE").Result;
-                foreach (var track in tracks)
-                    newPlaylistTracks.Add(track);
-            }
+            //var newPlaylistTracks = new ConcurrentBag<Track>();
 
-            newPlaylistTracks = new ConcurrentBag<Track>(newPlaylistTracks.DistinctBy(t => t.Id).OrderByDescending(t => t.Popularity).Take(10));
+            //foreach (var artist in allArtists)
+            //{
+            //    var tracks = Track.GetArtistTopTracks(artist.Id, "SE").Result;
+            //    foreach (var track in tracks)
+            //        newPlaylistTracks.Add(track);
+            //}
+
+            //newPlaylistTracks = new ConcurrentBag<Track>(newPlaylistTracks.DistinctBy(t => t.Id).OrderByDescending(t => t.Popularity).Take(10));
 
             var newPlaylist = Playlist.CreatePlaylist(user.Id, "SoundFunding " + DateTime.Today.ToShortDateString(), true, token).Result;
             newPlaylist.AddTracks(newPlaylistTracks.ToList(), token).RunSynchronously();
