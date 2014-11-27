@@ -13,7 +13,7 @@ namespace SoundFunding.Controllers
 
             url = url.Replace("{client_id}", SpotifyWebApiClient.ClientID);
             url = url.Replace("{response_type}", "token");
-            url = url.Replace("{redirect_uri}", RedirectUri);
+            url = url.Replace("{redirect_uri}", Url.Encode(RedirectUri));
             url = url.Replace("{scope}", string.Join(" ", SpotifyWebApiClient.AuthorizationScopes));
 
             return Redirect(url);
