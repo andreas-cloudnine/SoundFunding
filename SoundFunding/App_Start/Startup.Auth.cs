@@ -3,7 +3,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
 using SoundFunding.Models;
 
@@ -54,9 +53,17 @@ namespace SoundFunding
             //   consumerKey: "",
             //   consumerSecret: "");
 
+#if DEBUG
+
+            app.UseFacebookAuthentication(
+               appId: "345560648955927",
+               appSecret: "bd4f8a344c8061faf24c8d8e56231d84");
+#else 
             app.UseFacebookAuthentication(
                appId: "345524368959555",
                appSecret: "71a8173cadf194cc67d86cca7eb1f495");
+#endif
+
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
