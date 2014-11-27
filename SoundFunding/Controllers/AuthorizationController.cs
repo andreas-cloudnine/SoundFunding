@@ -27,5 +27,5 @@ namespace SoundFunding.Controllers
 
             return Content(token);
         }
-x    }
+    }
 }
