@@ -56,7 +56,7 @@ namespace SoundFunding.Controllers
                 newPlaylistTracks.AddRange(tracks);
             }
 
-            newPlaylistTracks = newPlaylistTracks.DistinctBy(t => t.Id).ToList();
+            newPlaylistTracks = newPlaylistTracks.DistinctBy(t => t.Id).OrderByDescending(t => t.Popularity).Take(10).ToList();
 
             var newPlaylist = await Playlist.CreatePlaylist(user.Id, "SoundFunding " + DateTime.Today.ToShortDateString(), true, token);
             await newPlaylist.AddTracks(newPlaylistTracks, token);
