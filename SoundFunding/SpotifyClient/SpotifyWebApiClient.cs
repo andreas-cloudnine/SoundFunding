@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using RestSharp;
 
 namespace SoundFunding.SpotifyClient
@@ -37,14 +39,26 @@ namespace SoundFunding.SpotifyClient
 
         public string GetToken(string code, string redirectUri)
         {
-            var request = new RestRequest("https://accounts.spotify.com/api/token", Method.POST);
+            Client.BaseUrl = new Uri("https://accounts.spotify.com");
+
+            var request = new RestRequest("/api/token", Method.POST);
             request.RequestFormat = DataFormat.Json;
 
-            request.AddParameter("grant_type", "authorization_code", ParameterType.RequestBody);
-            request.AddParameter("code", "code", ParameterType.RequestBody);
-            request.AddParameter("redirect_uri", redirectUri, ParameterType.RequestBody);
+            redirectUri = HttpUtility.UrlEncode(redirectUri);
+
+            request.AddParameter("grant_type", "authorization_code", ParameterType.QueryString);
+            request.AddParameter("code", code, ParameterType.QueryString);
+            request.AddParameter("redirect_uri", redirectUri, ParameterType.QueryString);
+            request.AddParameter("client_id", ClientID, ParameterType.QueryString);
+            request.AddParameter("client_secret", ClientSecret, ParameterType.QueryString);
 
             var response = Client.Execute<dynamic>(request);
+
+            if (response.Data == null)
+            {
+                //throw new Exception("Call failed to " + request.Resource);
+                return response.ErrorException != null ? response.ErrorException.ToString() : response.ErrorMessage;
+            }
 
             return response.Data.access_token;
         }

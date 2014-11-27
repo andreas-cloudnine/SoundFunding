@@ -1,11 +1,12 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using SoundFunding.SpotifyClient;
 
 namespace SoundFunding.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private const string RedirectUri = "http://soundfunding.azurewebsites.net/authorization/callback";
+        private const string RedirectUri = "http://soundfunding.azurewebsites.net/authorization/callback/";
 
         public ActionResult Login()
         {
@@ -19,9 +20,15 @@ namespace SoundFunding.Controllers
             return Redirect(url);
         }
 
-        public ActionResult Callback(string code, string state, string error)
+        public async Task<ActionResult> Callback(string code, string state, string error)
         {
-            var token = new SpotifyWebApiClient(new BasicAuthenticator()).GetToken(code, RedirectUri);
+            SpotifyWebAPI.Authentication.ClientId = SpotifyWebApiClient.ClientID;
+            SpotifyWebAPI.Authentication.ClientSecret = SpotifyWebApiClient.ClientSecret;
+            SpotifyWebAPI.Authentication.RedirectUri = RedirectUri;
+
+            var response = await SpotifyWebAPI.Authentication.GetAccessToken(code);
+
+            var token = response.AccessToken;
             
             SpotifyAuthenticator.AddTokenToSession(token);
 
