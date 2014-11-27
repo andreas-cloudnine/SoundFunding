@@ -16,6 +16,6 @@ namespace SoundFunding.Models
             return userIdentity;
         }
 
-        public int MinutesGiven { get; set; }
+        public int MinutesContributed { get; set; }
     }
 }
