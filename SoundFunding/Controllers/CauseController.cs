@@ -6,7 +6,12 @@ namespace SoundFunding.Controllers
 {
     public class CauseController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int id)
+        {
+            return View();
+        }
+
+        public ActionResult Create()
         {
             return View();
         }

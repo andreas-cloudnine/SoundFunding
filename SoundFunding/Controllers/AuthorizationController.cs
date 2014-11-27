@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,41 +26,45 @@ namespace SoundFunding.Controllers
             return Redirect(url);
         }
 
-        public async Task<ActionResult> Callback(string code, string state, string error)
+        public ActionResult Callback(string code, string state, string error)
         {
             Authentication.RedirectUri = RedirectUri;
 
-            var token = await Authentication.GetAccessToken(code);
+            var token = Authentication.GetAccessToken(code).Result;
+            if (token == null || token.HasExpired)
+                throw new Exception("Sys!");
 
             Session["SpotifyToken"] = token;
 
-            var user = await SpotifyWebAPI.User.GetCurrentUserProfile(token);
+            var user = SpotifyWebAPI.User.GetCurrentUserProfile(token).Result;
 
-            var playlists = await Playlist.GetUsersPlaylists(user, token);
+            var playlists = Playlist.GetUsersPlaylists(user, token).Result;
 
-            var allArtists = new List<Artist>();
+            var allArtists = new ConcurrentBag<Artist>();
 
             foreach (var playlist in playlists.Items)
             {
-                var playlistTracks = await Playlist.GetPlaylistTracks(user.Id, playlist.Id, token);
-                var artists = playlistTracks.Items.SelectMany(t => t.Track.Artists);
-                allArtists.AddRange(artists);
+                var playlistTracks = Playlist.GetPlaylistTracks(user.Id, playlist.Id, token).Result;
+                var artists = playlistTracks.Items.Take(2).SelectMany(t => t.Track.Artists).ToList();
+                foreach (var artist in artists)
+                    allArtists.Add(artist);
             }
 
-            allArtists = allArtists.DistinctBy(a => a.Id).ToList();
+            allArtists = new ConcurrentBag<Artist>(allArtists.ToArray().DistinctBy(a => a.Id));
 
-            var newPlaylistTracks = new List<Track>();
+            var newPlaylistTracks = new ConcurrentBag<Track>();
 
             foreach (var artist in allArtists)
             {
-                var tracks = await Track.GetArtistTopTracks(artist.Id, "SE");
-                newPlaylistTracks.AddRange(tracks);
+                var tracks = Track.GetArtistTopTracks(artist.Id, "SE").Result;
+                foreach (var track in tracks)
+                    newPlaylistTracks.Add(track);
             }
 
-            newPlaylistTracks = newPlaylistTracks.DistinctBy(t => t.Id).OrderByDescending(t => t.Popularity).Take(10).ToList();
+            newPlaylistTracks = new ConcurrentBag<Track>(newPlaylistTracks.DistinctBy(t => t.Id).OrderByDescending(t => t.Popularity).Take(10));
 
-            var newPlaylist = await Playlist.CreatePlaylist(user.Id, "SoundFunding " + DateTime.Today.ToShortDateString(), true, token);
-            await newPlaylist.AddTracks(newPlaylistTracks, token);
+            var newPlaylist = Playlist.CreatePlaylist(user.Id, "SoundFunding " + DateTime.Today.ToShortDateString(), true, token).Result;
+            newPlaylist.AddTracks(newPlaylistTracks.ToList(), token).RunSynchronously();
 
             return Json(new { playlist = newPlaylist.HREF });
         }
