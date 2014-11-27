@@ -11,5 +11,7 @@ namespace SoundFunding.Classes
                                                                                     "playlist-modify-public",
                                                                                     "user-read-private"
                                                                                 };
+
+        internal const string TokenSessionKey = "SpotifyKey";
     }
 }
