@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using SoundFunding.Models;
+﻿using System.Web.Mvc;
 
 namespace SoundFunding.Controllers
 {
