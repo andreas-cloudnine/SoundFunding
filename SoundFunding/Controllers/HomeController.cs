@@ -30,6 +30,11 @@ namespace SoundFunding.Controllers
             return View();
         }
 
+        public ActionResult Test()
+        {
+            return Json(new {hej = "Hipp!"}, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
