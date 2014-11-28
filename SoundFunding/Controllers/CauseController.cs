@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using SoundFunding.Classes;
 using SoundFunding.Models;
+using SpotifyWebAPI;
 
 namespace SoundFunding.Controllers
 {
@@ -62,7 +65,7 @@ namespace SoundFunding.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Cause cause)
+        public async Task<ActionResult> Create(Cause cause)
         {
             if (ModelState.IsValid)
             {
@@ -74,9 +77,11 @@ namespace SoundFunding.Controllers
                     cause.Picture = blobUri;
                 }
 
-                // TODO: Get from spotify
-                cause.SpotifyPlaylistUri = "spotify:track:4th1RQAelzqgY7wL53UGQt";
-                cause.SpotifyUserAvatarUrl = "/html/img/andreas.jpg";
+                var token = Session["SpotifyToken"] as AuthenticationToken;
+                var playlist = await PlaylistGenerator.GeneratePlaylist(token);
+                
+                cause.SpotifyPlaylistUri = playlist.Uri;
+                cause.SpotifyUserAvatarUrl = playlist.Owner.Images.First().Url;
 
                 using (var db = new SoundFundingDbContext())
                 {
