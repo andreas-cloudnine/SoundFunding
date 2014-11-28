@@ -33,7 +33,7 @@ namespace SoundFunding.Classes
 
                 var playlistTracks = new List<PlaylistTrack>();
 
-                var playlist = playlists.Items.OrderByDescending(p => p.Followers.Total).FirstOrDefault();
+                var playlist = playlists.Items.FirstOrDefault();
 
                 if (playlist != null)
                 {
@@ -83,13 +83,13 @@ namespace SoundFunding.Classes
             
             using (var db = new SoundFundingDbContext())
             {
-                var stored = db.Tracks.LastOrDefault(t => t.UserId == user.Id );
+                var stored = db.Tracks.OrderByDescending(t => t.Id).FirstOrDefault(t => t.UserId == user.Id );
                 if (stored == null)
                 {
                     if (attempt <= 3)
                     {
                         // Might not be generated yet
-                        Thread.Sleep(TimeSpan.FromSeconds(30));
+                        Thread.Sleep(TimeSpan.FromSeconds(10));
                         return await GeneratePlaylist(token, cause, ++attempt);
                     }
                     else

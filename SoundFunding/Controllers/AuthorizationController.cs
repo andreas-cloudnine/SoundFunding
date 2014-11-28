@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Antlr.Runtime;
@@ -41,6 +42,8 @@ namespace SoundFunding.Controllers
 
             new TaskFactory().StartNew(() => PlaylistGenerator.GenerateAndStorePlaylistTracks(token));
 
+            Thread.Sleep(TimeSpan.FromSeconds(30));
+            return new EmptyResult();
             return Redirect(Url.RouteUrl("default", new {controller = "Cause", action = "Create"}));
         }
 
