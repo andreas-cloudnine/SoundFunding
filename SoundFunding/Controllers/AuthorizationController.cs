@@ -16,7 +16,9 @@ namespace SoundFunding.Controllers
 {
     public class AuthorizationController : Controller
     {
-        public ActionResult Login(string redirectUri = "http://soundfunding.azurewebsites.net/authorization/callback/")
+        private const string RedirectUri = "http://soundfunding.azurewebsites.net/authorization/callback/";
+
+        public ActionResult Login(string redirectUri = null)
         {
             var url = "https://accounts.spotify.com/authorize?client_id={client_id}&response_type={response_type}&redirect_uri={redirect_uri}&scope={scope}";
 
@@ -24,7 +26,7 @@ namespace SoundFunding.Controllers
 
             url = url.Replace("{client_id}", Config.ClientID);
             url = url.Replace("{response_type}", "code");
-            url = url.Replace("{redirect_uri}", Url.Encode(redirectUri));
+            url = url.Replace("{redirect_uri}", Url.Encode(RedirectUri));
             url = url.Replace("{scope}", string.Join(" ", Config.AuthorizationScopes));
 
             return Redirect(url);
@@ -32,7 +34,7 @@ namespace SoundFunding.Controllers
 
         public async Task<ActionResult> Callback(string code, string state, string error)
         {
-            Authentication.RedirectUri = Session["LoginRedirectUrl"] as string;
+            Authentication.RedirectUri = RedirectUri;
 
             var token = await Authentication.GetAccessToken(code);
             if (token == null || token.HasExpired)
@@ -43,7 +45,13 @@ namespace SoundFunding.Controllers
             new TaskFactory().StartNew(() => PlaylistGenerator.GenerateAndStorePlaylistTracks(token));
 
             Thread.Sleep(TimeSpan.FromSeconds(10));
-            
+
+            var redirect = Session["LoginRedirectUrl"] as string;
+            if (redirect != null)
+            {
+                return Redirect(redirect);
+            }
+
             return Redirect(Url.RouteUrl("default", new {controller = "Cause", action = "Create"}));
         }
 
