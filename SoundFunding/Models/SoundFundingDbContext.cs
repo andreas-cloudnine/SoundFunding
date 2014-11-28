@@ -18,5 +18,6 @@ namespace SoundFunding.Models
 
         public DbSet<Cause> Causes { get; set; }
         public DbSet<PlaylistTracks> Tracks { get; set; }
+        public DbSet<Contributor> Contributors { get; set; }
     }
 }

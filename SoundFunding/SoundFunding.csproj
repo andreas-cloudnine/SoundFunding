@@ -227,6 +227,7 @@
     <Compile Include="Models\BlobHandler.cs" />
     <Compile Include="Models\Cause.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Contributor.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PlaylistTracks.cs" />
     <Compile Include="Models\SoundFundingDbContext.cs" />
