@@ -128,7 +128,7 @@ namespace SoundFunding.Classes
 
             using (var db = new SoundFundingDbContext())
             {
-                var stored = db.Tracks.LastOrDefault(t => t.UserId == user.Id);
+                var stored = db.Tracks.OrderByDescending(t => t.Id).FirstOrDefault(t => t.UserId == user.Id);
                 if (stored == null)
                 {
                     return user;
