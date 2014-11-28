@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using SoundFunding.Classes;
 using SoundFunding.Models;
 using SpotifyWebAPI;
@@ -67,6 +68,10 @@ namespace SoundFunding.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(Cause cause)
         {
+            var token = Session["SpotifyToken"] as AuthenticationToken;
+            if (token == null)
+                throw new Exception("Not logged in against Spotify");
+
             if (ModelState.IsValid)
             {
                 if(cause.PostedPicture != null)
@@ -77,10 +82,11 @@ namespace SoundFunding.Controllers
                     cause.Picture = blobUri;
                 }
 
-                var token = Session["SpotifyToken"] as AuthenticationToken;
-                var playlist = await PlaylistGenerator.GeneratePlaylist(token);
-                
+                var playlist = await PlaylistGenerator.GeneratePlaylist(token, cause);
+
+                cause.SpotifyPlaylistId = playlist.Id;
                 cause.SpotifyPlaylistUri = playlist.Uri;
+                cause.SpotifyUserId = playlist.Owner.Id;
                 cause.SpotifyUserAvatarUrl = playlist.Owner.Images.First().Url;
 
                 using (var db = new SoundFundingDbContext())
@@ -100,6 +106,21 @@ namespace SoundFunding.Controllers
                 var cause = db.Causes.Find(id);
                 return View(cause);
             }
+        }
+
+        [HttpPost]
+        public ActionResult Join(int id)
+        {
+            var token = Session["SpotifyToken"] as AuthenticationToken;
+            if (token == null)
+                throw new Exception("Not logged in against Spotify");
+            using (var db = new SoundFundingDbContext())
+            {
+                var cause = db.Causes.Find(id);
+                if (cause.SpotifyPlaylistId != null)
+                    PlaylistGenerator.AddToPlaylist(token, cause);
+            }
+            return RedirectToAction("Cause", new {id = id});
         }
     }
 }

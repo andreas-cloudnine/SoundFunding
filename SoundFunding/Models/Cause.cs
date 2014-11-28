@@ -25,7 +25,9 @@ namespace SoundFunding.Models
         public HttpPostedFileBase PostedPicture { get; set; }
         public string Picture { get; set; }
 
+        public string SpotifyUserId { get; set; }
         public string SpotifyUserAvatarUrl { get; set; }
+        public string SpotifyPlaylistId { get; set; }
         public string SpotifyPlaylistUri { get; set; }
     }
 }

@@ -34,35 +34,35 @@ namespace SoundFunding
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
             });            
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+//            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
-            app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
+//            // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
+//            app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
 
-            // Enables the application to remember the second login verification factor such as phone or email.
-            // Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
-            // This is similar to the RememberMe option when you log in.
-            app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
+//            // Enables the application to remember the second login verification factor such as phone or email.
+//            // Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
+//            // This is similar to the RememberMe option when you log in.
+//            app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+//            // Uncomment the following lines to enable logging in with third party login providers
+//            //app.UseMicrosoftAccountAuthentication(
+//            //    clientId: "",
+//            //    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+//            //app.UseTwitterAuthentication(
+//            //   consumerKey: "",
+//            //   consumerSecret: "");
 
-#if DEBUG
+//#if DEBUG
 
-            app.UseFacebookAuthentication(
-               appId: "345560648955927",
-               appSecret: "bd4f8a344c8061faf24c8d8e56231d84");
-#else 
-            app.UseFacebookAuthentication(
-               appId: "345524368959555",
-               appSecret: "71a8173cadf194cc67d86cca7eb1f495");
-#endif
+//            app.UseFacebookAuthentication(
+//               appId: "345560648955927",
+//               appSecret: "bd4f8a344c8061faf24c8d8e56231d84");
+//#else 
+//            app.UseFacebookAuthentication(
+//               appId: "345524368959555",
+//               appSecret: "71a8173cadf194cc67d86cca7eb1f495");
+//#endif
 
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
