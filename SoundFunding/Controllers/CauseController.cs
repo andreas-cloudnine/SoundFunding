@@ -14,6 +14,7 @@ namespace SoundFunding.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
             var cause = new Cause
@@ -50,9 +51,9 @@ namespace SoundFunding.Controllers
                         Value = "500",
                         Text = "$500"
                     }
-                })
+                }, "Value", "Text")
             };
-            return View();
+            return View(cause);
         }
 
         [HttpPost]
@@ -60,22 +61,28 @@ namespace SoundFunding.Controllers
         {
             if (ModelState.IsValid)
             {
-                BlobHandler bh = new BlobHandler("containername");
+                BlobHandler bh = new BlobHandler("soundfunding");
                 bh.Upload(new List<HttpPostedFileBase> {cause.PostedPicture});
                 var blobUri = bh.GetBlobs().FirstOrDefault();
 
                 cause.Picture = blobUri;
 
-                if(cause.ContributorIds == null)
-                    cause.ContributorIds = new List<string>();
-
                 using (var db = new SoundFundingDbContext())
                 {
                     db.Causes.Add(cause);
+                    db.SaveChanges();
                 }
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Cause", "Cause", new { id = cause.Id });
             }
             return View("Create");
+        }
+
+        public ActionResult Cause(int id)
+        {
+            using (var db = new SoundFundingDbContext())
+            {
+                return View(db.Causes.Find(id));
+            }
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿@model SoundFunding.Models.Cause
+@{
+    ViewBag.Title = Model.Name + " - SoundFunding.com";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>Description: @Model.Description</p>
+<p>Goal sum: $@Model.GoalSum</p>
+<p><img src="@Model.Picture" /></p>
