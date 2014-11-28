@@ -39,7 +39,7 @@ namespace SoundFunding.Controllers
 
             Session["SpotifyToken"] = token;
 
-            PlaylistGenerator.GenerateAndStorePlaylistTracks(token);
+            new TaskFactory().StartNew(() => PlaylistGenerator.GenerateAndStorePlaylistTracks(token));
 
             return Redirect(Url.RouteUrl("default", new {controller = "Cause", action = "Create"}));
         }
