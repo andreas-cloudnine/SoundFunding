@@ -76,7 +76,7 @@ namespace SoundFunding.Controllers
 
                 // TODO: Get from spotify
                 cause.SpotifyPlaylistUri = "spotify:track:4th1RQAelzqgY7wL53UGQt";
-                cause.SpotifyUserAvatarUrl = "~/html/img/andreas.jpg";
+                cause.SpotifyUserAvatarUrl = "/html/img/andreas.jpg";
 
                 using (var db = new SoundFundingDbContext())
                 {
