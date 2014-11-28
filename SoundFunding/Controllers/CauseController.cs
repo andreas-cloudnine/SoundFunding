@@ -97,6 +97,7 @@ namespace SoundFunding.Controllers
                     db.Causes.Add(cause);
                     db.SaveChanges();
                 }
+
                 return RedirectToAction("Cause", "Cause", new { id = cause.Id });
             }
             return View("Create");
@@ -107,6 +108,9 @@ namespace SoundFunding.Controllers
             using (var db = new SoundFundingDbContext())
             {
                 var cause = db.Causes.Find(id);
+
+                cause.OtherCauses = db.Causes.ToList();
+
                 return View(cause);
             }
         }

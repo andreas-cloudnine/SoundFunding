@@ -29,5 +29,8 @@ namespace SoundFunding.Models
         public string SpotifyUserAvatarUrl { get; set; }
         public string SpotifyPlaylistId { get; set; }
         public string SpotifyPlaylistUri { get; set; }
+
+        [NotMapped]
+        public List<Cause> OtherCauses { get; set; }
     }
 }

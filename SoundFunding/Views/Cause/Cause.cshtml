@@ -17,38 +17,49 @@
     <div class="content clean">
         <h1>@Model.Name</h1>
         <p>@Model.Description</p>
-        <p>My charity @Model.ReceivingOrganization</p>
-        <table width=100% border=0>
+        <p><strong>My charity</strong> @Model.ReceivingOrganization</p>
+
+        <table width="100%">
             <tr>
-                <td>Funded so far</td>
+                <td>Funded so far</span></td>
                 <td>&nbsp;</td>
                 <td>Status</td>
             </tr>
             <tr>
-                <td><strong>$@Model.GoalSum</strong></td>
+                <td><span>$@Model.GoalSum</span></td>
                 <td>&nbsp;</td>
-                <td><strong>0%</strong></td>
+                <td><span>@(new Random().Next(0, 100))%</span></td>
+            </tr>
+            <tr>
+                <td colspan=3>&nbsp;</td>
             </tr>
         </table>
+
         <div class="clear"></div>
 
         <div style="border:1px solid white;">
             <iframe src="https://embed.spotify.com/?uri=@Model.SpotifyPlaylistUri" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
         </div>
+        
+        <a href="#" class="button join">Join the cause</a>
+
         <div class="clear"></div>
     </div>
 </div>
 
 <div class="container" style="margin-top:100px;">
     <div class="content clean">
-
-        <img src="~/html/img/andreas.jpg" class="circle">
-        <img src="~/html/img/andreas2.jpg" class="circle">
-        <img src="~/html/img/andreas3.jpg" class="circle">
-        <img src="~/html/img/andreas4.jpg" class="circle">
-        <img src="~/html/img/andreas5.jpg" class="circle">
-        <img src="~/html/img/andreas6.jpg" class="circle">
-        <img src="~/html/img/andreas7.jpg" class="circle">
+        @if (Model.OtherCauses != null && Model.OtherCauses.Any())
+        {
+            var random = new Random();
+            foreach (var cause in Model.OtherCauses)
+            {
+                var dim = random.Next(150, 275);
+                <a href="/Cause/Cause/@cause.Id">
+                    <img src="@cause.Picture" width="@dim" height="@dim" class="circle">
+                </a>
+            }
+        }
 
         <div class="clear"></div>
     </div>
