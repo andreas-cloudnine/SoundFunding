@@ -1,9 +1,8 @@
+using SoundFunding.Models;
+
 namespace SoundFunding.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<SoundFunding.Models.SoundFundingDbContext>
     {
@@ -14,20 +13,15 @@ namespace SoundFunding.Migrations
             ContextKey = "SoundFunding.Models.SoundFundingDbContext";
         }
 
-        protected override void Seed(SoundFunding.Models.SoundFundingDbContext context)
+        protected override void Seed(SoundFundingDbContext db)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            db.Causes.Add(new Cause
+            {
+                Name = "Rädda tigern",
+                ReceivingOrganization = "WWF",
+                GoalSum = 500,
+                Picture = "/html/img/bg-tiger-400f.png"
+            });
         }
     }
 }
