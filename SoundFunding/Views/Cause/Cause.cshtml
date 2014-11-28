@@ -5,7 +5,13 @@
 
 <h2>@Model.Name</h2>
 
+<img src="@Model.SpotifyUserAvatarUrl"/>
+
 <p>Description: @Model.Description</p>
 <p>Goal sum: $@Model.GoalSum</p>
 <p>My charity: @Model.ReceivingOrganization</p>
 <p><img src="@Model.Picture" width="300" /></p>
+
+
+
+<iframe src="https://embed.spotify.com/?uri=@Model.SpotifyPlaylistUri" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>

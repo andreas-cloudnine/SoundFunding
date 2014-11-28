@@ -14,8 +14,10 @@ namespace SoundFunding.Models
 
         public string Name { get; set; }
         public string Description { get; set; }
+
+        [NotMapped]
+        public SelectList GoalSums { get; set; }
         public int GoalSum { get; set; }
-        //public List<string> ContributorIds { get; set; }
 
         public string ReceivingOrganization { get; set; }
 
@@ -23,7 +25,7 @@ namespace SoundFunding.Models
         public HttpPostedFileBase PostedPicture { get; set; }
         public string Picture { get; set; }
 
-        [NotMapped]
-        public SelectList GoalSums { get; set; }
+        public string SpotifyUserAvatarUrl { get; set; }
+        public string SpotifyPlaylistUri { get; set; }
     }
 }
