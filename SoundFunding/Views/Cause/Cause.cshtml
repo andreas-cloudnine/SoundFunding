@@ -3,15 +3,38 @@
     ViewBag.Title = Model.Name + " - SoundFunding.com";
 }
 
-<h2>@Model.Name</h2>
+<div class="container" style="margin-top:50px; background:#004C89;">
+    <div class="top" style="background: url(@Model.Picture) no-repeat">
 
-<img src="@Model.SpotifyUserAvatarUrl"/>
+    </div>
+</div>
 
-<p>Description: @Model.Description</p>
-<p>Goal sum: $@Model.GoalSum</p>
-<p>My charity: @Model.ReceivingOrganization</p>
-<p><img src="@Model.Picture" width="300" /></p>
+<div class="clear"></div>
 
+<img src="@Model.SpotifyUserAvatarUrl" id="circle">
 
+<div class="container">
+    <div class="content clean">
+        <h1>@Model.Name</h1>
+        <p>@Model.Description</p>
+        <p>My charity @Model.ReceivingOrganization</p>
+        <table width=100% border=0>
+            <tr>
+                <td>Funded so far</td>
+                <td>&nbsp;</td>
+                <td>Status</td>
+            </tr>
+            <tr>
+                <td><strong>$@Model.GoalSum</strong></td>
+                <td>&nbsp;</td>
+                <td><strong>0%</strong></td>
+            </tr>
+        </table>
+        <div class="clear"></div>
 
-<iframe src="https://embed.spotify.com/?uri=@Model.SpotifyPlaylistUri" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+        <div style="border:1px solid white;">
+            <iframe src="https://embed.spotify.com/?uri=@Model.SpotifyPlaylistUri" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
