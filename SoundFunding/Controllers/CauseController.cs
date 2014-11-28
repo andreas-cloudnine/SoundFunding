@@ -63,7 +63,7 @@ namespace SoundFunding.Controllers
             {
                 BlobHandler bh = new BlobHandler("soundfunding");
                 bh.Upload(new List<HttpPostedFileBase> {cause.PostedPicture});
-                var blobUri = bh.GetBlobs().FirstOrDefault();
+                var blobUri = bh.GetBlobs().FirstOrDefault(b => b.Contains(cause.PostedPicture.FileName));
 
                 cause.Picture = blobUri;
 
