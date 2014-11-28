@@ -7,7 +7,7 @@
     <div class="content clean">
         <div class="form">
             <fieldset>
-                @using (Html.BeginForm("Create", "Cause", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Create", "Cause", FormMethod.Post, new { enctype = "multipart/form-data", @class="cause-form" }))
                 {
 
                     @Html.TextBoxFor(m => m.Name, new { placeholder = "Name YOUR funding!" })
@@ -40,7 +40,7 @@
                         </label>
                     </div>
 
-                    <a class="button" onclick="$(form).submit();">Create your SoundFund</a>
+                    <a href="#" class="button" onclick="$('.cause-form').submit();">Create your SoundFund</a>
                 }
             </fieldset>
         </div>
