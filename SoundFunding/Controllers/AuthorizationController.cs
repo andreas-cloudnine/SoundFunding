@@ -28,11 +28,11 @@ namespace SoundFunding.Controllers
             return Redirect(url);
         }
 
-        public ActionResult Callback(string code, string state, string error)
+        public async Task<ActionResult> Callback(string code, string state, string error)
         {
             Authentication.RedirectUri = RedirectUri;
 
-            var token = Authentication.GetAccessToken(code).Result;
+            var token = await Authentication.GetAccessToken(code);
             if (token == null || token.HasExpired)
                 throw new Exception("Sys!");
 
@@ -76,21 +76,56 @@ namespace SoundFunding.Controllers
         {
             var user = await SpotifyWebAPI.User.GetCurrentUserProfile(token);
 
-            var playlists = await Playlist.GetUsersPlaylists(user, token);
+            var artists = new List<Artist>();
 
-            var tasks = playlists.Items.Take(2).Select(p => Playlist.GetPlaylistTracks(user.Id, p.Id, token));
+            var savedTracks = await SpotifyWebAPI.User.GetUsersSavedTracks(token);
 
-            var playlistTracks = await Task.WhenAll(tasks);
+            if (savedTracks.Total > 0)
+            {
+                artists.AddRange(savedTracks.Items.SelectMany(t => t.Artists).ToList());
+            }
 
-            var artists = playlistTracks.SelectMany(t => t.Items.SelectMany(t2 => t2.Track.Artists));
+            if (artists.Count <= 2)
+            {
+                var playlists = await Playlist.GetUsersPlaylists(user, token);
+
+                var playlistTracks = new List<PlaylistTrack>();
+
+                foreach (var playlist in playlists.Items)
+                {
+                    
+                    //var tracks = await Playlist.GetPlaylistTracks(user.Id, playlist.Id, token);
+                    var tracks = GetPlaylistTracks(user.Id, playlist.Id, token);
+                    playlistTracks.AddRange(tracks);
+                }
+
+                //var playlistTracks = await Playlist.GetPlaylistTracks(user.Id, playlists.Items.First().Id, token);
+
+                artists.AddRange(playlistTracks.SelectMany(t2 => t2.Track.Artists));
+            }
+
+            artists = artists.OrderByDescending(a => a.Popularity).Take(5).ToList();
             var artistNames = artists.Select(a => a.Name);
 
             var client = new RestClient("http://cdn.filtr.com/2.1");
-            var request = new RestRequest("/SE/SE/tracks?artist={artist}");
+            var request = new RestRequest("/SE/SE/tracks");
             request.AddParameter("artist", artistNames.First());
 
             var result = client.Execute(request);
             Session["DataSys"] = result.Content;
+        }
+
+        private IEnumerable<PlaylistTrack> GetPlaylistTracks(string userId, string playlistId, AuthenticationToken token)
+        {
+            var client = new RestClient("https://api.spotify.com/v1");
+            var request = new RestRequest("/users/{user_id}/playlists/{playlist_id}/tracks");
+            request.AddParameter("user_id", userId, ParameterType.UrlSegment);
+            request.AddParameter("playlist_id", playlistId, ParameterType.UrlSegment);
+
+            request.AddHeader("Authorization", "Bearer " + token.AccessToken);
+            
+            var result = client.Execute<List<PlaylistTrack>>(request);
+            return result.Data;
         }
     }
 }
