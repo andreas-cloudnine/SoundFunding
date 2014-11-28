@@ -87,7 +87,10 @@ namespace SoundFunding.Controllers
                 cause.SpotifyPlaylistId = playlist.Id;
                 cause.SpotifyPlaylistUri = playlist.Uri;
                 cause.SpotifyUserId = playlist.Owner.Id;
-                cause.SpotifyUserAvatarUrl = playlist.Owner.Images.First().Url;
+
+                var image = playlist.Owner.Images.FirstOrDefault();
+                if (image != null)
+                    cause.SpotifyUserAvatarUrl = image.Url;
 
                 using (var db = new SoundFundingDbContext())
                 {
