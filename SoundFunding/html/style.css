@@ -327,3 +327,14 @@ a.button {
 .container td span {
 	font-size:45px;
 }
+
+a.button.join {
+	background-color: #b0171c;
+	border: none;
+	color: #fff;
+	display: inline-block;
+	font-size: 34px;
+	margin: 20px 0;
+	padding: 10px;
+	width: 25%;
+}
