@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using SpotifyWebAPI;
 
 namespace SoundFunding.Models
 {
@@ -16,5 +17,6 @@ namespace SoundFunding.Models
         }
 
         public DbSet<Cause> Causes { get; set; }
+        public DbSet<PlaylistTracks> Tracks { get; set; }
     }
 }

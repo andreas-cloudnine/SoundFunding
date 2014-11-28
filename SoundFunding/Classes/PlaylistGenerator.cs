@@ -4,19 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Ajax.Utilities;
 using RestSharp;
+using SoundFunding.Models;
 using SpotifyWebAPI;
 
 namespace SoundFunding.Classes
 {
     public static class PlaylistGenerator
     {
-        public static async Task<Playlist> GeneratePlaylist(AuthenticationToken token)
+        public static async void GenerateAndStorePlaylistTracks(AuthenticationToken token)
         {
             var user = await User.GetCurrentUserProfile(token);
 
             var artists = new List<Artist>();
 
-            var savedTracks = await SpotifyWebAPI.User.GetUsersSavedTracks(token);
+            var savedTracks = await User.GetUsersSavedTracks(token);
 
             if (savedTracks.Total > 0)
             {
@@ -54,15 +55,34 @@ namespace SoundFunding.Classes
                 var result = client.Execute<List<FiltrTrack>>(request);
                 newPlaylistTrackIds.AddRange(
                     result.Data.OrderByDescending(t => t.hotness)
-                        .Take(5)
+                        .Take(2)
                         .Select(t => t.spotifyUri.Replace("spotify:track:", string.Empty)));
             }
 
-            var newPlaylistTracks = await Track.GetTracks(newPlaylistTrackIds);
-            var newPlaylist = Playlist.CreatePlaylist(user.Id, "SoundFunding " + DateTime.Today.ToShortDateString(), true, token).Result;
-            await newPlaylist.AddTracks(newPlaylistTracks.OrderBy(t => t.Popularity).Take(5).ToList(), token);
+            using (var db = new SoundFundingDbContext())
+            {
+                db.Tracks.Add(new PlaylistTracks { UserId = user.Id, TrackIds = string.Join(",", newPlaylistTrackIds.Distinct()) });
+                db.SaveChanges();
+            }
+        }
 
-            return newPlaylist;
+        public static async Task<Playlist> GeneratePlaylist(AuthenticationToken token)
+        {
+            var user = await User.GetCurrentUserProfile(token);
+            
+            using (var db = new SoundFundingDbContext())
+            {
+                var stored = db.Tracks.LastOrDefault(t => t.UserId == user.Id );
+                if (stored == null)
+                {
+                    return null; //TODO: Fetch Filtr standard playlist
+                }
+
+                var newPlaylistTracks = await Track.GetTracks(stored.TrackIds.Split(',').ToList());
+                var newPlaylist = Playlist.CreatePlaylist(user.Id, "SoundFunding " + DateTime.Today.ToShortDateString(), true, token).Result;
+                await newPlaylist.AddTracks(newPlaylistTracks.OrderBy(t => t.Popularity).Take(5).ToList(), token);
+                return newPlaylist;
+            }
         }
     }
 
