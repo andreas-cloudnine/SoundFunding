@@ -23,6 +23,11 @@ namespace SoundFunding.Controllers
                 {
                     new SelectListItem
                     {
+                        Value = "0",
+                        Text = "Set your goal!"
+                    },
+                    new SelectListItem
+                    {
                         Value = "50",
                         Text = "$50"
                     },
@@ -61,12 +66,13 @@ namespace SoundFunding.Controllers
         {
             if (ModelState.IsValid)
             {
-                BlobHandler bh = new BlobHandler("soundfunding");
-                bh.Upload(new List<HttpPostedFileBase> {cause.PostedPicture});
-                var blobUri = bh.GetBlobs().FirstOrDefault(b => b.Contains(cause.PostedPicture.FileName));
-
-                cause.Picture = blobUri;
-
+                if(cause.PostedPicture != null)
+                { 
+                    var bh = new BlobHandler("soundfunding");
+                    bh.Upload(new List<HttpPostedFileBase> {cause.PostedPicture});
+                    var blobUri = bh.GetBlobs().FirstOrDefault(b => b.Contains(cause.PostedPicture.FileName));
+                    cause.Picture = blobUri;
+                }
                 using (var db = new SoundFundingDbContext())
                 {
                     db.Causes.Add(cause);
