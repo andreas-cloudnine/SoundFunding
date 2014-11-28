@@ -257,11 +257,21 @@
     <Content Include="Content\Site.css" />
     <Content Include="html\form.html" />
     <Content Include="html\img\andreas.jpg" />
+    <Content Include="html\img\andreas2.jpg" />
+    <Content Include="html\img\andreas3.jpg" />
+    <Content Include="html\img\andreas4.jpg" />
+    <Content Include="html\img\andreas5.jpg" />
+    <Content Include="html\img\andreas6.jpg" />
+    <Content Include="html\img\andreas7.jpg" />
     <Content Include="html\img\arrow.down.png" />
     <Content Include="html\img\bg.big.jpg" />
+    <Content Include="html\img\bg.jpg" />
     <Content Include="html\img\bg.tiger-190.jpg" />
+    <Content Include="html\img\bg.tiger-190f.png" />
     <Content Include="html\img\bg.tiger-275.jpg" />
+    <Content Include="html\img\bg.tiger-275f.png" />
     <Content Include="html\img\bg.tiger-400.jpg" />
+    <Content Include="html\img\bg.tiger-400f.png" />
     <Content Include="html\img\fading_background_17.png" />
     <Content Include="html\img\fading_background_17b.png" />
     <Content Include="html\img\gun-metal.jpg" />
@@ -281,6 +291,7 @@
     <Content Include="html\img\tiger-190.png" />
     <Content Include="html\img\tiger-300.png" />
     <Content Include="html\img\tiger-450.png" />
+    <Content Include="html\img\tiger_frilagd.png" />
     <Content Include="html\img\top-back.gif" />
     <Content Include="html\img\top-back2.gif" />
     <Content Include="html\style.css" />
@@ -292,6 +303,7 @@
     <Content Include="html\grund.php" />
     <Content Include="html\index.php" />
     <Content Include="html\menu.php" />
+    <Content Include="html\playlist.php" />
     <None Include="Properties\PublishProfiles\soundfunding - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\soundfunding - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\soundfunding.pubxml" />

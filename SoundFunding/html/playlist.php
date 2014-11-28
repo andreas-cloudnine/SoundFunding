@@ -1,30 +1,12 @@
 ﻿<!DOCTYPE HTML>
 <head>
-<title>index | Tele2</title>
+<title>index</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="style.css" media="all"></head>
 
 <body>
-
-<style>
-@media (max-width: 680px) {
-	#circle {
-		top:150px;
-	}
-}
-@media (min-width: 601px) {
-	#circle {
-		top:175px;
-	}
-}
-@media (min-width: 1200px) {
-	#circle {
-		top:200px;
-	}
-}
-</style>
 
 
 <div class="logo">
@@ -34,8 +16,8 @@
 	</div>
 </div>
 
-<div class="container" style="margin-top:50px; background:#0072B1;">
-	<div class="top" style="display:none;">
+<div class="container" style="margin-top:50px; background:#004C89;">
+	<div class="top">
 
 	</div>
 </div>
@@ -44,33 +26,48 @@
 
 <div class="clear"></div>
 
+<img src="img/andreas.jpg" id="circle">
 
-<div class="container">
-	<div class="content clean">
-			<div class="icons">
-				<img src="img/icons.png">
-			</div>		
+<div class="container" style="margin-top:100px;">
+	<div class="content clean">	
+		<h1>Save the Tiger!</h1>
+		<table width=100% border=0>
+		<tr>
+			<td>Funded so far</td>
+			<td>&nbsp;</td>
+			<td>Satus</td>
+		</tr>
+		<tr>
+			<td><strong>450 kr</strong></td>
+			<td>&nbsp;</td>
+			<td><strong>63%</strong></td>
+		</tr>
+		</table>
 		<div class="clear"></div>
+		
+		
+		<div style="border:1px solid white;">
+			Player goes here...
+		</div>
+		
 	</div>
 </div>
 
-<div class="container">
+
+<div class="container" style="margin-top:100px;">
 	<div class="content clean">
 
-			<p>
+			<img src="img/andreas.jpg" class="circle">
+			<img src="img/andreas2.jpg" class="circle">
+			<img src="img/andreas3.jpg" class="circle">
+			<img src="img/andreas4.jpg" class="circle">			
+			<img src="img/andreas5.jpg" class="circle">
+			<img src="img/andreas6.jpg" class="circle">			
+			<img src="img/andreas7.jpg" class="circle">			
 			
-			Med Readly läser hela familjen så mycket de vill med ett och
-samma abonnemang. Läs direkt eller ladda ner och ta med dig.
-Readly fungerar på de flesta surfplattor och smartphones. 
-			</p>
-	
-	
-				<a href="" class="button">Create your soundfund</a>	
-	
 		<div class="clear"></div>
 	</div>
 </div>
-
 
 
 <div class="footer">

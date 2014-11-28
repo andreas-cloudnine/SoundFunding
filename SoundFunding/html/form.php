@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link type="text/css" rel="stylesheet" href="style.css" media="all"></head>
 
+
+
 <body>
 
 <style>
@@ -60,7 +62,7 @@
 			<fieldset>
 				<input type="text" placeholder="Name YOUR funding!">
 				<textarea placeholder="Describe your funding with two or three sentences"></textarea>
-				<select class="selectpicker">
+				<select class="selectpicker show-menu-arrow">
 					<option value="goal">Set your goal</option>
 					<option value="">100 kr</option>
 					<option value="">200 kr</option>
@@ -73,24 +75,25 @@
 				<div class="logos">
 					<label>
 						<img src="img/logotype.bris.png" alt="BRIS" />
-						<input type="checkbox">
+						<input type="radio" name="radio">
 					</label>	
 					<label>
 						<img src="img/logotype.amnesty.png" alt="Amnesty International" />
-						<input type="checkbox">
+						<input type="radio" name="radio">
 					</label>
 					<label>
 						<img src="img/logotype.actionaid.png" alt="Actionaid" />
-						<input type="checkbox">
+						<input type="radio" name="radio">
 					</label>
 					<label>
 						<img src="img/logotype.wwf.png" alt="WWF" />
-						<input type="checkbox">
+						<input type="radio" name="radio">
 					</label>
 				</div>
+				<a href="" class="button">Create your soundfund</a>
 			</fieldset>
-		</div>		
-		
+
+		</div>	
 		
 		<div class="clear"></div>
 	</div>
@@ -105,11 +108,12 @@
 	</div>
 </div>
 
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<!--<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="scripts/bootstrap-select.js"></script>
 		<script type="text/javascript">
 			$('.selectpicker').selectpicker();
-		</script>
+		</script>-->
 
 </body>
 </html>
