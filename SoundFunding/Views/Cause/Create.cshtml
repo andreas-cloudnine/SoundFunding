@@ -19,6 +19,10 @@
                     @Html.TextAreaFor(m => m.Description)
                 </div>
                 <div class="form-group">
+                    @Html.LabelFor(m => m.PostedPicture)
+                    <input type="file" name="@Html.NameFor(m => m.PostedPicture)"/>
+                </div>
+                <div class="form-group">
                     @Html.LabelFor(m => m.GoalSum)
                     @Html.DropDownListFor(m => m.GoalSum, Model.GoalSums)
                 </div>
