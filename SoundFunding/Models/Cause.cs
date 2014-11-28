@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
+using System.Web.Mvc;
 
 namespace SoundFunding.Models
 {
@@ -19,5 +20,8 @@ namespace SoundFunding.Models
         [NotMapped]
         public HttpPostedFileBase PostedPicture { get; set; }
         public string Picture { get; set; }
+
+        [NotMapped]
+        public SelectList GoalSums { get; set; }
     }
 }

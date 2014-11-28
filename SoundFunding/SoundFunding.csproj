@@ -257,6 +257,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\soundfunding - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\soundfunding - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\soundfunding.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

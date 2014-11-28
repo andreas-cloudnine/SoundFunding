@@ -16,6 +16,42 @@ namespace SoundFunding.Controllers
 
         public ActionResult Create()
         {
+            var cause = new Cause
+            {
+                GoalSums = new SelectList(new List<SelectListItem>
+                {
+                    new SelectListItem
+                    {
+                        Value = "50",
+                        Text = "$50"
+                    },
+                    new SelectListItem
+                    {
+                        Value = "75",
+                        Text = "$75"
+                    },
+                    new SelectListItem
+                    {
+                        Value = "100",
+                        Text = "$100"
+                    },
+                    new SelectListItem
+                    {
+                        Value = "150",
+                        Text = "$150"
+                    },
+                    new SelectListItem
+                    {
+                        Value = "200",
+                        Text = "$200"
+                    },
+                    new SelectListItem
+                    {
+                        Value = "500",
+                        Text = "$500"
+                    }
+                })
+            };
             return View();
         }
 
