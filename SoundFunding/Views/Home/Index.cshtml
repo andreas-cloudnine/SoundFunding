@@ -2,18 +2,36 @@
     ViewBag.Title = "About SoundFunding.com";
 }
 
+<div class="container">
+    <div class="content clean">
+        <div class="icons">
+            <img src="~/html/img/icons.png">
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
 
-<p>Like music? Want to make the world a better place? Why not combine the two? 
-    On SoundFunding you can raise money for your favorite cause while listening to the music you love. It's that easy.</p>
+<div class="container">
+    <div class="content clean">
 
-<p>SoundFunding is a service where 100 % of the earnings from a specific play list is donated to a cause and a charity donation of your choice. All you need to do is
-    <ol>
-        <li>Specify a cause and upload a suitable image</li>
-        <li>Specify a goal for your fundraising</li>
-        <li>Choose you favourite charity organisation</li>
-        <li>Share the information about your cause to all you friends, inviting them to join you</li>
-    </ol>
+        <p>
+            Like music? Want to make the world a better place? Why not combine the two?
+            On SoundFunding you can raise money for your favorite cause while listening to the music you love. It's that easy.
+        </p>
 
-<p>SoundFunding will then create a play list by combining 3 of the favourite artists of each one joining your cause. 
-    The longer you and your friends listen to the play list, the more money you raised. And it doesn't cost any of you 
-    anything else than the chance of listening to other tunes than what you're used to.</p>
+        <p>
+        SoundFunding is a service where 100 % of the earnings from a specific play list is donated to a cause and a charity donation of your choice. All you need to do is
+            <p>1. Specify a cause and upload a suitable image</p>
+        <p>2. Specify a goal for your fundraising</p>
+        <p>3. Choose you favourite charity organisation</p>
+        <p>4. Share the information about your cause to all you friends, inviting them to join you</p>
+
+        <p>
+            SoundFunding will then create a play list by combining 3 of the favourite artists of each one joining your cause.
+            The longer you and your friends listen to the play list, the more money you raised. And it doesn't cost any of you
+            anything else than the chance of listening to other tunes than what you're used to.
+        </p>
+
+        @Html.ActionLink("Create your SoundFund", "Create", "Cause", null, new { @class = "button" })
+    </div>
+</div>

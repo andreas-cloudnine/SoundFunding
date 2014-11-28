@@ -1,8 +1,8 @@
 ﻿
 @font-face{
 	font-family:"HarmoniaSans W01 Light";
-	src:url("Fonts/0d3ddd7f-1365-4614-b4cd-3109f95fba46.eot?#iefix");
-	src:url("Fonts/0d3ddd7f-1365-4614-b4cd-3109f95fba46.eot?#iefix") format("eot"),url("Fonts/b8b58a75-9a85-4560-a2f2-bfb3f2f2fc98.woff") format("woff"),url("Fonts/ba31de29-149c-4049-947e-9c3f1ecaa8d2.ttf") format("truetype"),url("Fonts/2b103519-dc70-43c5-84eb-95348ed9f55a.svg#2b103519-dc70-43c5-84eb-95348ed9f55a") format("svg");
+	src:url("/html/Fonts/0d3ddd7f-1365-4614-b4cd-3109f95fba46.eot?#iefix");
+	src:url("/html/Fonts/0d3ddd7f-1365-4614-b4cd-3109f95fba46.eot?#iefix") format("eot"),url("/html/Fonts/b8b58a75-9a85-4560-a2f2-bfb3f2f2fc98.woff") format("woff"),url("/html/Fonts/ba31de29-149c-4049-947e-9c3f1ecaa8d2.ttf") format("truetype"),url("/html/Fonts/2b103519-dc70-43c5-84eb-95348ed9f55a.svg#2b103519-dc70-43c5-84eb-95348ed9f55a") format("svg");
 }
 
 body {

@@ -256,6 +256,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="html\Fonts\filtr-font.svg" />
     <Content Include="html\form.html" />
     <Content Include="html\img\andreas.jpg" />
     <Content Include="html\img\andreas2.jpg" />
@@ -305,6 +306,9 @@
     <Content Include="html\index.php" />
     <Content Include="html\menu.php" />
     <Content Include="html\playlist.php" />
+    <Content Include="html\Fonts\filtr-font.eot" />
+    <Content Include="html\Fonts\filtr-font.ttf" />
+    <Content Include="html\Fonts\filtr-font.woff" />
     <None Include="Properties\PublishProfiles\soundfunding - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\soundfunding - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\soundfunding.pubxml" />

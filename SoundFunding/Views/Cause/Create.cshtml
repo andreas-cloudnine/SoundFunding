@@ -3,42 +3,46 @@
     ViewBag.Title = "Add cause";
 }
 
-<div class="form">
-    <fieldset>
-        @using (Html.BeginForm("Create", "Cause", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
+<div class="container">
+    <div class="content clean">
+        <div class="form">
+            <fieldset>
+                @using (Html.BeginForm("Create", "Cause", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
 
-            @Html.TextBoxFor(m => m.Name, new { placeholder="Name YOUR funding!" })
-            @Html.TextAreaFor(m => m.Description, new { placeholder = "Describe your funding with two or three sentences" })
-            @Html.DropDownListFor(m => m.GoalSum, Model.GoalSums, new { @class = "selectpicker" })
+                    @Html.TextBoxFor(m => m.Name, new { placeholder = "Name YOUR funding!" })
+                    @Html.TextAreaFor(m => m.Description, new { placeholder = "Describe your funding with two or three sentences" })
+                    @Html.DropDownListFor(m => m.GoalSum, Model.GoalSums, new { @class = "selectpicker show-menu-arrow " })
 
-            <h2>Upload your photo (a BIG one)</h2>
-            <a href="">
-                <img src="~/html/img/icon.camera.png" alt="">
-            </a>
-            <input type="file" name="@Html.NameFor(m => m.PostedPicture)" />
-            
-            <h2>Choose your organization</h2>
-            <div class="logos">
-                <label>
-                    <img src="~/html/img/logotype.bris.png" alt="BRIS" />
-                    @Html.RadioButtonFor(m => m.ReceivingOrganization, "BRIS")
-                </label>
-                <label>
-                    <img src="~/html/img/logotype.amnesty.png" alt="Amnesty International" />
-                    @Html.RadioButtonFor(m => m.ReceivingOrganization, "Amnesty International")
-                </label>
-                <label>
-                    <img src="~/html/img/logotype.actionaid.png" alt="Actionaid" />
-                    @Html.RadioButtonFor(m => m.ReceivingOrganization, "Actionaid")
-                </label>
-                <label>
-                    <img src="~/html/img/logotype.wwf.png" alt="WWF" />
-                    @Html.RadioButtonFor(m => m.ReceivingOrganization, "WWF")
-                </label>
-            </div>
+                    <h2>Upload your photo (a BIG one)</h2>
+                    <a href="#" style="display: block; clear: both;">
+                        <img src="~/html/img/icon.camera.png" alt="">
+                    </a>
+                    <input type="file" name="@Html.NameFor(m => m.PostedPicture)" />
 
-            <input type="submit" value="Create cause" class="btn btn-default" />
-        }
-    </fieldset>
+                    <h2>Choose your organization</h2>
+                    <div class="logos">
+                        <label>
+                            <img src="~/html/img/logotype.bris.png" alt="BRIS" />
+                            @Html.RadioButtonFor(m => m.ReceivingOrganization, "BRIS")
+                        </label>
+                        <label>
+                            <img src="~/html/img/logotype.amnesty.png" alt="Amnesty International" />
+                            @Html.RadioButtonFor(m => m.ReceivingOrganization, "Amnesty International")
+                        </label>
+                        <label>
+                            <img src="~/html/img/logotype.actionaid.png" alt="Actionaid" />
+                            @Html.RadioButtonFor(m => m.ReceivingOrganization, "Actionaid")
+                        </label>
+                        <label>
+                            <img src="~/html/img/logotype.wwf.png" alt="WWF" />
+                            @Html.RadioButtonFor(m => m.ReceivingOrganization, "WWF")
+                        </label>
+                    </div>
+
+                    <a class="button" onclick="$(form).submit();">Create your SoundFund</a>
+                }
+            </fieldset>
+        </div>
+    </div>
 </div>
