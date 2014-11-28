@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using SoundFunding.Migrations;
 using SpotifyWebAPI;
 
 namespace SoundFunding.Models
@@ -9,6 +10,7 @@ namespace SoundFunding.Models
         public SoundFundingDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<SoundFundingDbContext, Configuration>());
         }
 
         public static SoundFundingDbContext Create()
