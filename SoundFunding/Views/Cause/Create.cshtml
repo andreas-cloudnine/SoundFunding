@@ -3,36 +3,42 @@
     ViewBag.Title = "Add cause";
 }
 
-<h2>Create cause</h2>
+<div class="form">
+    <fieldset>
+        @using (Html.BeginForm("Create", "Cause", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
 
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Create", "Cause", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Name)
-                    @Html.TextBoxFor(m => m.Name)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Description)
-                    @Html.TextAreaFor(m => m.Description)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PostedPicture)
-                    <input type="file" name="@Html.NameFor(m => m.PostedPicture)"/>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.GoalSum)
-                    @Html.DropDownListFor(m => m.GoalSum, Model.GoalSums)
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create cause" class="btn btn-default" />
-                    </div>
-                </div>
-            }
-        </section>
-    </div>
+            @Html.TextBoxFor(m => m.Name, new { placeholder="Name YOUR funding!" })
+            @Html.TextAreaFor(m => m.Description, new { placeholder = "Describe your funding with two or three sentences" })
+            @Html.DropDownListFor(m => m.GoalSum, Model.GoalSums, new { @class = "selectpicker" })
+
+            <h2>Upload your photo (a BIG one)</h2>
+            <a href="">
+                <img src="~/html/img/icon.camera.png" alt="">
+            </a>
+            <input type="file" name="@Html.NameFor(m => m.PostedPicture)" />
+            
+            <h2>Choose your organization</h2>
+            <div class="logos">
+                <label>
+                    <img src="~/html/img/logotype.bris.png" alt="BRIS" />
+                    @Html.RadioButtonFor(m => m.ReceivingOrganization, "BRIS")
+                </label>
+                <label>
+                    <img src="~/html/img/logotype.amnesty.png" alt="Amnesty International" />
+                    @Html.RadioButtonFor(m => m.ReceivingOrganization, "Amnesty International")
+                </label>
+                <label>
+                    <img src="~/html/img/logotype.actionaid.png" alt="Actionaid" />
+                    @Html.RadioButtonFor(m => m.ReceivingOrganization, "Actionaid")
+                </label>
+                <label>
+                    <img src="~/html/img/logotype.wwf.png" alt="WWF" />
+                    @Html.RadioButtonFor(m => m.ReceivingOrganization, "WWF")
+                </label>
+            </div>
+
+            <input type="submit" value="Create cause" class="btn btn-default" />
+        }
+    </fieldset>
 </div>
-

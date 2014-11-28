@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<style>
+			body { background: #ff4002; font-family: Arial; }
+			img {
+				border: none;
+			}
+			h2 {
+				color: #fff;
+				font-size: 21px;
+				margin-top: 80px;
+			}
+			input, select, textarea {
+				color: #A3A3A3;
+				font-family: arial;
+				font-size: 21px;
+			}
+			.form {
+				text-align: center;
+			}
+			.form input[type="text"], 
+			.form textarea {
+				border: none;
+				background-color: #fff;
+				display: block;
+				margin-bottom: 20px;
+				padding: 5px;
+				text-align: center;
+				width: 100%;
+			}
+			.form select {
+				background: url(images/arrow.down.png) no-repeat right #fff;
+				border: none;
+				color: #000;
+				padding: 5px;
+				text-align: center;
+				width: 50%;
+			}
+			.form .logos label {
+				float: left;
+				width: 25%;
+			}
+			.form input[type="checkbox"] {
+				display: block;
+			}
+		</style>
+		
+	</head>
+	<body>
+	
+		<div class="form">
+			<fieldset>
+				<input type="text" placeholder="Name YOUR funding!">
+				<textarea placeholder="Describe your funding with two or three sentences"></textarea>
+				<select class="selectpicker">
+					<option value="goal">Set your goal</option>
+					<option value="">100 kr</option>
+					<option value="">200 kr</option>
+				</select>
+				<h2>Upload your photo (a BIG one)</h2>
+				<a href="">
+					<img src="images/icon.camera.png" alt="">
+				</a>
+				<h2>Choose your organization</h2>
+				<div class="logos">
+					<label>
+						<img src="images/logotype.bris.png" alt="BRIS" />
+						<input type="checkbox">
+					</label>	
+					<label>
+						<img src="images/logotype.amnesty.png" alt="Amnesty International" />
+						<input type="checkbox">
+					</label>
+					<label>
+						<img src="images/logotype.actionaid.png" alt="Actionaid" />
+						<input type="checkbox">
+					</label>
+					<label>
+						<img src="images/logotype.wwf.png" alt="WWF" />
+						<input type="checkbox">
+					</label>
+				</div>
+			</fieldset>
+		</div>
+		
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script type="text/javascript" src="scripts/bootstrap-select.js"></script>
+		<script type="text/javascript">
+			$('.selectpicker').selectpicker();
+		</script>
+	</body>
+</html>

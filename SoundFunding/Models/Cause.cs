@@ -17,6 +17,8 @@ namespace SoundFunding.Models
         public int GoalSum { get; set; }
         //public List<string> ContributorIds { get; set; }
 
+        public string ReceivingOrganization { get; set; }
+
         [NotMapped]
         public HttpPostedFileBase PostedPicture { get; set; }
         public string Picture { get; set; }
