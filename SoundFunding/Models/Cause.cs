@@ -25,5 +25,11 @@ namespace SoundFunding.Models
 
         [NotMapped]
         public SelectList GoalSums { get; set; }
+
+        [NotMapped]
+        public string SpotifyUserAvatarUrl { get; set; }
+
+        [NotMapped]
+        public string SpotifyPlaylistUri { get; set; }
     }
 }

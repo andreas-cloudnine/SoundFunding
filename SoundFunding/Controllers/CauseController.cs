@@ -73,6 +73,11 @@ namespace SoundFunding.Controllers
                     var blobUri = bh.GetBlobs().FirstOrDefault(b => b.Contains(cause.PostedPicture.FileName));
                     cause.Picture = blobUri;
                 }
+
+                // TODO: Get from spotify
+                cause.SpotifyPlaylistUri = "spotify:track:4th1RQAelzqgY7wL53UGQt";
+                cause.SpotifyUserAvatarUrl = "~/html/img/andreas.jpg";
+
                 using (var db = new SoundFundingDbContext())
                 {
                     db.Causes.Add(cause);
@@ -87,7 +92,8 @@ namespace SoundFunding.Controllers
         {
             using (var db = new SoundFundingDbContext())
             {
-                return View(db.Causes.Find(id));
+                var cause = db.Causes.Find(id);
+                return View(cause);
             }
         }
     }
