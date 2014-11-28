@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SoundFunding.Models;
 
 namespace SoundFunding.Migrations
@@ -22,7 +23,22 @@ namespace SoundFunding.Migrations
                 GoalSum = 500,
                 Picture = "/html/img/bg-tiger-400f.png",
                 SpotifyPlaylistUri = "spotify:user:sonymusicentertainment:playlist:2BkvZh4A1UVPQIps6ILKvd",
-                SpotifyUserAvatarUrl = "/html/img/andreas.jpg"
+                SpotifyUserAvatarUrl = "/html/img/andreas.jpg",
+                Contributors = new List<Contributor>()
+                {
+                    new Contributor
+                    {
+                        ImageUrl = "/html/img/andreas.jpg"
+                    },
+                    new Contributor
+                    {
+                        ImageUrl = "/html/img/andreas.jpg"
+                    },
+                    new Contributor
+                    {
+                        ImageUrl = "/html/img/andreas.jpg"
+                    },
+                }
             });
  
             db.Causes.Add(new Cause

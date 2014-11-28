@@ -33,7 +33,7 @@ namespace SoundFunding.Classes
 
                 var playlistTracks = new List<PlaylistTrack>();
 
-                var playlist = playlists.Items.FirstOrDefault();
+                var playlist = playlists.Items.FirstOrDefault(p => p.Tracks.Total > 0);
 
                 if (playlist != null)
                 {
@@ -106,6 +106,8 @@ namespace SoundFunding.Classes
                 var newPlaylistTracks = await Track.GetTracks(stored.TrackIds.Split(',').ToList());
                 var newPlaylist = await Playlist.CreatePlaylist(user.Id, "SoundFunding " + cause.Name, true, token);
                 await newPlaylist.AddTracks(newPlaylistTracks.OrderBy(t => t.Popularity).Take(5).ToList(), token);
+
+                newPlaylist = await Playlist.GetPlaylist(user.Id, newPlaylist.Id, token);
                 return newPlaylist;
             }
         }
@@ -120,7 +122,7 @@ namespace SoundFunding.Classes
             return result.Data.OrderByDescending(p => p.hotness).First();
         }
 
-        public static async void AddToPlaylist(AuthenticationToken token, Cause cause)
+        public static async Task<User> AddToPlaylist(AuthenticationToken token, Cause cause)
         {
             var user = await User.GetCurrentUserProfile(token);
 
@@ -129,12 +131,14 @@ namespace SoundFunding.Classes
                 var stored = db.Tracks.LastOrDefault(t => t.UserId == user.Id);
                 if (stored == null)
                 {
+                    return user;
                 }
 
                 var newPlaylistTracks = await Track.GetTracks(stored.TrackIds.Split(',').ToList());
                 var playlist = await Playlist.GetPlaylist(cause.SpotifyUserId, cause.SpotifyPlaylistId, token);
                 await playlist.AddTracks(newPlaylistTracks.OrderBy(t => t.Popularity).Take(5).ToList(), token);
             }
+            return user;
         }
 
     }

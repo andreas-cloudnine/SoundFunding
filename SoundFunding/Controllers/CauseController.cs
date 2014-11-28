@@ -109,14 +109,11 @@ namespace SoundFunding.Controllers
             {
                 var cause = db.Causes.Find(id);
 
-                cause.OtherCauses = db.Causes.ToList();
-
                 return View(cause);
             }
         }
 
-        [HttpPost]
-        public ActionResult Join(int id)
+        public async Task<ActionResult> Join(int id)
         {
             var token = Session["SpotifyToken"] as AuthenticationToken;
             if (token == null)
@@ -124,8 +121,22 @@ namespace SoundFunding.Controllers
             using (var db = new SoundFundingDbContext())
             {
                 var cause = db.Causes.Find(id);
+
                 if (cause.SpotifyPlaylistId != null)
-                    PlaylistGenerator.AddToPlaylist(token, cause);
+                {
+                    var user = await PlaylistGenerator.AddToPlaylist(token, cause);
+                    var image = user.Images.FirstOrDefault();
+                    if (image != null)
+                    {
+                        cause.Contributors = cause.Contributors ?? new List<Contributor>();
+                        cause.Contributors.Add(new Contributor
+                        {
+                            ImageUrl = image.Url
+                        });
+                    }
+                }
+
+                db.SaveChanges();
             }
             return RedirectToAction("Cause", new {id = id});
         }

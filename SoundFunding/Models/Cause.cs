@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 using System.Web.Mvc;
+using SpotifyWebAPI;
 
 namespace SoundFunding.Models
 {
@@ -30,7 +31,6 @@ namespace SoundFunding.Models
         public string SpotifyPlaylistId { get; set; }
         public string SpotifyPlaylistUri { get; set; }
 
-        [NotMapped]
-        public List<Cause> OtherCauses { get; set; }
+        public List<Contributor> Contributors { get; set; }
     }
 }

@@ -41,7 +41,7 @@
             <iframe src="https://embed.spotify.com/?uri=@Model.SpotifyPlaylistUri" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
         </div>
         
-        <a href="#" class="button join">Join the cause</a>
+        <a href="/authorization/login?redirectUri=http://soundfunding.azurewebsites.net/Cause/Join/@Model.Id" class="button join">Join the cause</a>
 
         <div class="clear"></div>
     </div>
@@ -49,14 +49,14 @@
 
 <div class="container" style="margin-top:100px;">
     <div class="content clean">
-        @if (Model.OtherCauses != null && Model.OtherCauses.Any())
+        @if (Model.Contributors != null && Model.Contributors.Any())
         {
             var random = new Random();
-            foreach (var cause in Model.OtherCauses)
+            foreach (var contributor in Model.Contributors)
             {
                 var dim = random.Next(150, 275);
-                <a href="/Cause/Cause/@cause.Id">
-                    <img src="@cause.Picture" width="@dim" height="@dim" class="circle">
+                <a href="#">
+                    <img src="@contributor.ImageUrl" width="@dim" height="@dim" class="circle">
                 </a>
             }
         }

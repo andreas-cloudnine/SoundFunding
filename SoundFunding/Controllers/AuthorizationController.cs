@@ -18,9 +18,11 @@ namespace SoundFunding.Controllers
     {
         private const string RedirectUri = "http://soundfunding.azurewebsites.net/authorization/callback/";
 
-        public ActionResult Login()
+        public ActionResult Login(string redirectUri = null)
         {
             var url = "https://accounts.spotify.com/authorize?client_id={client_id}&response_type={response_type}&redirect_uri={redirect_uri}&scope={scope}";
+
+            Session["LoginRedirectUrl"] = redirectUri;
 
             url = url.Replace("{client_id}", Config.ClientID);
             url = url.Replace("{response_type}", "code");
@@ -42,8 +44,14 @@ namespace SoundFunding.Controllers
 
             new TaskFactory().StartNew(() => PlaylistGenerator.GenerateAndStorePlaylistTracks(token));
 
-            Thread.Sleep(TimeSpan.FromSeconds(30));
-            return new EmptyResult();
+            Thread.Sleep(TimeSpan.FromSeconds(10));
+
+            var redirect = Session["LoginRedirectUrl"] as string;
+            if (redirect != null)
+            {
+                return Redirect(redirect);
+            }
+
             return Redirect(Url.RouteUrl("default", new {controller = "Cause", action = "Create"}));
         }
 
