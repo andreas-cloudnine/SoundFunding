@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Antlr.Runtime;
 using Microsoft.Ajax.Utilities;
+using RestSharp;
 using SoundFunding.Classes;
 using SpotifyWebAPI;
 
@@ -36,23 +38,16 @@ namespace SoundFunding.Controllers
 
             Session["SpotifyToken"] = token;
 
-            var user = SpotifyWebAPI.User.GetCurrentUserProfile(token).Result;
+            new TaskFactory().StartNew(() => GeneratePlaylist(token));
 
-            var playlists = Playlist.GetUsersPlaylists(user, token).Result;
-
-            var newPlaylistTracks = playlists.Items.First().Tracks.Items.Select(t => t.Track).Take(2);
-
-            //var allArtists = new ConcurrentBag<Artist>();
 
             //foreach (var playlist in playlists.Items)
             //{
-            //    var playlistTracks = Playlist.GetPlaylistTracks(user.Id, playlist.Id, token).Result;
-            //    var artists = playlistTracks.Items.Take(2).SelectMany(t => t.Track.Artists).ToList();
+            //    var playlistTracks = await Playlist.GetPlaylistTracks(user.Id, playlist.Id, token);
+            //    var artists = playlistTracks.Items.Take(5).SelectMany(t => t.Track.Artists).ToList();
             //    foreach (var artist in artists)
             //        allArtists.Add(artist);
             //}
-
-            //allArtists = new ConcurrentBag<Artist>(allArtists.ToArray().DistinctBy(a => a.Id));
 
             //var newPlaylistTracks = new ConcurrentBag<Track>();
 
@@ -65,10 +60,37 @@ namespace SoundFunding.Controllers
 
             //newPlaylistTracks = new ConcurrentBag<Track>(newPlaylistTracks.DistinctBy(t => t.Id).OrderByDescending(t => t.Popularity).Take(10));
 
-            var newPlaylist = Playlist.CreatePlaylist(user.Id, "SoundFunding " + DateTime.Today.ToShortDateString(), true, token).Result;
-            newPlaylist.AddTracks(newPlaylistTracks.ToList(), token).RunSynchronously();
+            //var newPlaylist = Playlist.CreatePlaylist(user.Id, "SoundFunding " + DateTime.Today.ToShortDateString(), true, token).Result;
+            //newPlaylist.AddTracks(newPlaylistTracks.ToList(), token).RunSynchronously();
 
-            return Json(new { playlist = newPlaylist.HREF });
+            return Content("Foo");
+            //return Json(new { playlist = newPlaylist.HREF });
+        }
+
+        public ActionResult DataSys()
+        {
+            return Content(Session["DataSys"] as string);
+        }
+
+        public async void GeneratePlaylist(AuthenticationToken token)
+        {
+            var user = await SpotifyWebAPI.User.GetCurrentUserProfile(token);
+
+            var playlists = await Playlist.GetUsersPlaylists(user, token);
+
+            var tasks = playlists.Items.Take(2).Select(p => Playlist.GetPlaylistTracks(user.Id, p.Id, token));
+
+            var playlistTracks = await Task.WhenAll(tasks);
+
+            var artists = playlistTracks.SelectMany(t => t.Items.SelectMany(t2 => t2.Track.Artists));
+            var artistNames = artists.Select(a => a.Name);
+
+            var client = new RestClient("http://cdn.filtr.com/2.1");
+            var request = new RestRequest("/SE/SE/tracks?artist={artist}");
+            request.AddParameter("artist", artistNames.First());
+
+            var result = client.Execute(request);
+            Session["DataSys"] = result.Content;
         }
     }
 }
